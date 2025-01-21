@@ -1,9 +1,14 @@
 from neo4j import GraphDatabase
+import os
+from dotenv import load_dotenv
 
-# Verbindungsparameter
-uri = "bolt://localhost:7687"  # Standard-Bolt-Port
-username = "neo4j"             # Standard-Benutzername
-password = "Trüffelöl"         # Ersetze dies durch das Passwort, das du beim Anlegen des DBMS festgelegt hast
+# Lade Umgebungsvariablen aus der .env-Datei
+load_dotenv()
+
+# Verbindungsparameter aus der .env-Datei laden
+uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")  # Fallback-Wert, falls nicht in der .env-Datei vorhanden
+username = os.getenv("NEO4J_USERNAME", "neo4j")        # Fallback-Wert
+password = os.getenv("NEO4J_PASSWORD")    # Fallback-Wert
 
 # Verbindung herstellen
 driver = GraphDatabase.driver(uri, auth=(username, password))
