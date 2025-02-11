@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 # Lade Umgebungsvariablen aus der .env-Datei
 load_dotenv()
 
+# Wichtig: nummerierung in den merges stimmt nicht: muss a1, b1 usw sein. 
+
 # Verbindungsparameter aus der .env-Datei laden
 uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")  # Fallback-Wert, falls nicht in der .env-Datei vorhanden
 username = os.getenv("NEO4J_USERNAME", "neo4j")        # Fallback-Wert
@@ -20,7 +22,7 @@ def run_cypher_queries(cypher_queries):
         print("Beispieldaten erfolgreich erstellt!")
 
 # Beispiel: Cypher-Abfragen von OpenAI generieren und ausführen
-from apiAnfrage import generate_cypher_queries
+from Taiwan_apiAnfrageGPT import generate_cypher_queries
 
 cypher_queries = generate_cypher_queries()
 run_cypher_queries(cypher_queries)
