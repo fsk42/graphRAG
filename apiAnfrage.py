@@ -21,12 +21,11 @@ def get_completion(prompt, model='gpt-3.5-turbo'):
 # Create a prompt for generating Cypher queries for node creation
 def generate_cypher_queries():
     prompt = """
-    Erstelle eine Cypher-Abfrage, um die folgenden Knoten zu erstellen:
-    - Person Marie, Alter 30
-    - Person Bob, Alter 25
-    - Person Charlie, Alter 35
-    Verbinde Marie mit Bob und Bob mit Charlie mit der Beziehung :KNOWS.
-    Gib die Abfragen in Cypher zurück.
+    extract the most significant keywords from the question below. 
+    For each keyword also return different conjugations of the word. 
+    Return them as a list of plain keywords simply separated by a comma. 
+
+    What has happened to Ukrainian energy facilities?
     """
     return get_completion(prompt)
 
