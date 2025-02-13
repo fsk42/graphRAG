@@ -1,11 +1,10 @@
-# graphKeywordSearch.py
-
 import os
 from dotenv import load_dotenv, find_dotenv
 from neo4j import GraphDatabase
 
-# Importiere die Funktion generate_keywords aus questionToKeyword.py
+# Importiere die benötigten Funktionen aus den anderen Modulen
 from questionToKeyword import generate_keywords
+from finalAnswer import generate_answer
 
 _ = load_dotenv(find_dotenv())
 
@@ -71,22 +70,35 @@ def search_nodes_by_keywords(keywords):
                     end_name   = end_node["name"]
                     rel_type   = rel_obj.type
 
-                    # Hier wird immer die tatsächliche Richtung aus Neo4j abgebildet
+                    # Hier wird die tatsächliche Richtung aus Neo4j abgebildet
                     results_text += f"{start_name} --[:{rel_type}]--> {end_name}\n"
 
     return results_text
 
-
 if __name__ == "__main__":
-    # Statt fester Stichwörter, rufe generate_keywords() auf
+    # 1) Stichwörter über generate_keywords() holen und in eine Liste umwandeln
     keywords_str = generate_keywords()
-    # Es wird angenommen, dass generate_keywords() eine kommaseparierte Zeichenkette zurückgibt.
+    # Annahme: generate_keywords() liefert eine kommaseparierte Zeichenkette
     keywords = [keyword.strip() for keyword in keywords_str.split(",")]
 
-    result_text = search_nodes_by_keywords(keywords)
-
+    # 2) Suche im Graphen anhand der Stichwörter
+    relations_text = search_nodes_by_keywords(keywords)
+    
+    # Optional: Ergebnisse im Graph in eine Datei speichern (falls benötigt)
     with open("search_results.txt", "w", encoding="utf-8") as f:
-        f.write(result_text)
-
-    print("Ergebnisse in 'search_results.txt' gespeichert.")
+        f.write(relations_text)
+    
+    print("Graph-Suchergebnisse:")
+    print(relations_text)
+    
+    # 3) Frage definieren (hier kann auch eine dynamische Eingabe erfolgen)
+    question = "What has happened to Ukrainian energy facilities?"
+    
+    # 4) Rufe generate_answer() aus finalAnswer.py auf und übergebe Frage und ermittelte Relationen
+    final_answer = generate_answer(question, relations_text)
+    
+    # 5) Die finale Antwort in der Konsole ausgeben
+    print("\nFinal Answer:")
+    print(final_answer)
+    
     driver.close()
