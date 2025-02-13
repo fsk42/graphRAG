@@ -1,8 +1,11 @@
-# Taiwan_apiAnfrageGPT.py
+# graphKeywordSearch.py
 
 import os
 from dotenv import load_dotenv, find_dotenv
 from neo4j import GraphDatabase
+
+# Importiere die Funktion generate_keywords aus questionToKeyword.py
+from questionToKeyword import generate_keywords
 
 _ = load_dotenv(find_dotenv())
 
@@ -75,8 +78,10 @@ def search_nodes_by_keywords(keywords):
 
 
 if __name__ == "__main__":
-    # Beispiel-Stichwörter
-    keywords = ["Ukraine", "Russia"]
+    # Statt fester Stichwörter, rufe generate_keywords() auf
+    keywords_str = generate_keywords()
+    # Es wird angenommen, dass generate_keywords() eine kommaseparierte Zeichenkette zurückgibt.
+    keywords = [keyword.strip() for keyword in keywords_str.split(",")]
 
     result_text = search_nodes_by_keywords(keywords)
 
