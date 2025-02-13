@@ -12,10 +12,18 @@ driver = GraphDatabase.driver(uri, auth=(username, password))
 def create_nodes():
     with driver.session() as session:
         session.run("""
-        MATCH (n)
-        DETACH DELETE n  
-
+                    
+         
+        MERGE (a:Person {name: 'Russian_forces'})
+        MERGE (b:Person {name: 'Ukrainian_energy_infrastructure'})
+        MERGE (a)-[:TARGETING]->(b)
         
+
+        MERGE (c:Person {name: 'Russian_forces'})
+        MERGE (d:Person {name: 'Ukrainian_air_defense_umbrella'})
+        MERGE (c)-[:EXPLOITING]->(d)
+        
+
         """)
         print("russland knoten erstellt!")
 

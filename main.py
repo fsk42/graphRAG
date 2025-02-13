@@ -5,38 +5,41 @@ from dotenv import load_dotenv
 # Lade Umgebungsvariablen aus der .env-Datei
 load_dotenv()
 
-# Wichtig: nummerierung in den merges stimmt nicht: muss a1, b1 usw sein. 
+# Default-Verbindungsparameter (oder aus .env)
+uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+username = os.getenv("NEO4J_USERNAME", "neo4j")
+password = os.getenv("NEO4J_PASSWORD")
 
-# Verbindungsparameter aus der .env-Datei laden
-uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")  # Fallback-Wert, falls nicht in der .env-Datei vorhanden
-username = os.getenv("NEO4J_USERNAME", "neo4j")        # Fallback-Wert
-password = os.getenv("NEO4J_PASSWORD")    # Fallback-Wert
-
-# Verbindung herstellen
 driver = GraphDatabase.driver(uri, auth=(username, password))
 
-# Funktion zum Ausführen von Cypher-Abfragen
 def run_cypher_queries(cypher_queries):
+    """
+    Führt eine Liste von Cypher-Statements einzeln aus.
+    So werden Variablen-Konflikte bei 'a' und 'b' vermieden, 
+    und wir umgehen Syntaxfehler durch mehrfaches DECLARE.
+    """
     with driver.session() as session:
-        session.run(cypher_queries)
-        print("Beispieldaten erfolgreich erstellt!")
+        for query in cypher_queries:
+            session.run(query)
+        print("Alle Cypher-Statements erfolgreich ausgeführt!")
 
-# Beispiel: Cypher-Abfragen von OpenAI generieren und ausführen
+# Importiere die Funktion zum Generieren der Queries
 from Taiwan_apiAnfrageGPT import generate_cypher_queries
 
-cypher_queries = generate_cypher_queries()
-run_cypher_queries(cypher_queries)
+if __name__ == "__main__":
+    # 1) Generiere eine Liste einzelner Cypher-Statements
+    cypher_queries = generate_cypher_queries()
 
-# Funktion zum Abfragen der Knoten
-def query_nodes():
-    with driver.session() as session:
-        result = session.run("MATCH (n:Person) RETURN n.name AS name, n.age AS age")
-        print("Abfrageergebnisse:")
-        for record in result:
-            print(f"Name: {record['name']}, Alter: {record['age']}")
+    # 2) Führe sie in einer Schleife aus
+    run_cypher_queries(cypher_queries)
 
-# Beispielknoten abfragen
-query_nodes()
+    # Beispiel: Abfrage der neu erstellten Person-Knoten
+    def query_nodes():
+        with driver.session() as session:
+            result = session.run("MATCH (n:Person) RETURN n.name AS name")
+            print("Abfrageergebnisse (Personen):")
+            for record in result:
+                print(f"Name: {record['name']}")
 
-# Verbindung schließen, wenn du fertig bist
-driver.close()
+    query_nodes()
+    driver.close()
