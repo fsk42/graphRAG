@@ -12,11 +12,9 @@ driver = GraphDatabase.driver(uri, auth=(username, password))
 def create_nodes():
     with driver.session() as session:
         session.run("""
-        CREATE (a:Person {name: 'Alice', age: 30})
-        CREATE (b:Person {name: 'Bob', age: 25})
-        CREATE (c:Person {name: 'Charlie', age: 35})
-        CREATE (a)-[:KNOWS]->(b)
-        CREATE (b)-[:KNOWS]->(c)
+            MATCH (n)
+            DETACH DELETE n;
+
         """)
         print("Beispieldaten erfolgreich erstellt!")
 

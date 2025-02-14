@@ -1,11 +1,12 @@
-from neo4j import GraphDatabase
+# src/knowledge_graph_creation/createKnowledgeGraph.py
+
 import os
 from dotenv import load_dotenv
+from neo4j import GraphDatabase
 
 # Lade Umgebungsvariablen aus der .env-Datei
 load_dotenv()
 
-# Default-Verbindungsparameter (oder aus .env)
 uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 username = os.getenv("NEO4J_USERNAME", "neo4j")
 password = os.getenv("NEO4J_PASSWORD")
@@ -24,14 +25,30 @@ def run_cypher_queries(cypher_queries):
         print("Alle Cypher-Statements erfolgreich ausgeführt!")
 
 # Importiere die Funktion zum Generieren der Queries
-from Taiwan_apiAnfrageGPT import generate_cypher_queries
+from src.knowledge_graph_creation.Taiwan_apiAnfrageGPT import generate_cypher_queries
 
 if __name__ == "__main__":
-    # 1) Generiere eine Liste einzelner Cypher-Statements
-    cypher_queries = generate_cypher_queries()
+    # Pfad zum Datenordner (ggf. anpassen)
+    data_folder = os.path.join(os.path.dirname(__file__), "..", "..", "data")
 
-    # 2) Führe sie in einer Schleife aus
-    run_cypher_queries(cypher_queries)
+    # Liste alle Dateien im Ordner data/ auf
+    for filename in os.listdir(data_folder):
+        if filename.endswith(".txt"):
+            file_path = os.path.join(data_folder, filename)
+            print(f"\nVerarbeite Datei: {file_path}")
+
+            # 1) Lese den Text aus der Datei
+            with open(file_path, "r", encoding="utf-8") as f:
+                text_content = f.read()
+
+            print(text_content)
+
+            # 2) Generiere pro Textdatei neue Cypher-Statements
+            cypher_queries = generate_cypher_queries(text_content)
+            print(cypher_queries)
+
+            # 3) Führe sie in der DB aus
+            run_cypher_queries(cypher_queries)
 
     # Beispiel: Abfrage der neu erstellten Person-Knoten
     def query_nodes():

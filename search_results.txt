@@ -12,6 +12,10 @@ Keine passenden Knoten gefunden.
 Keine passenden Knoten gefunden.
 
 
+--- Ergebnisse für Stichwort: 'happenings' ---
+Keine passenden Knoten gefunden.
+
+
 --- Ergebnisse für Stichwort: 'Ukrainian' ---
 Russian_forces --[:TARGETING]--> Ukrainian_energy_infrastructure
 Russian_forces --[:EXPLOITING]--> Ukrainian_air_defense_umbrella
@@ -61,6 +65,10 @@ Russia --[:ATTEMPTING_TO_COLLAPSE]--> Ukraine_s_energy_grid
 Russia --[:COLLAPSING]--> Ukraine_s_energy_grid
 Russia --[:HEAVILY]--> Ukraine_s_energy_infrastructure
 Russia --[:CAUSING_SIGNIFICANT_DAMAGE_TO]--> Ukraine_s_energy_facilities
+
+
+--- Ergebnisse für Stichwort: 'energies' ---
+Keine passenden Knoten gefunden.
 
 
 --- Ergebnisse für Stichwort: 'facility' ---
