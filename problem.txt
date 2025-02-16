@@ -1,2 +1,0 @@
-die methode um die triplets in cypher queries umzuwandeln funktioniert nicht richtig. 
-alle "Personen" werden a und b genannt. 

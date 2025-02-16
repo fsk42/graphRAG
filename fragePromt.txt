@@ -1,6 +1,0 @@
-'''
-extract the most significant keywords from the question below. 
-return them as a list of plain keywords simply separated by an abstract. 
-
-What has happened to Ukrainian energy facilities?
-'''
