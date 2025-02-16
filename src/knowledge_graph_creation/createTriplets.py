@@ -1,4 +1,4 @@
-# src/knowledge_graph_creation/Taiwan_apiAnfrageGPT.py
+# src/knowledge_graph_creation/createTriplets.py
 
 import os
 import re

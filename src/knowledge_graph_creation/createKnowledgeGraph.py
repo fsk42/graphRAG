@@ -25,7 +25,7 @@ def run_cypher_queries(cypher_queries):
         print("Alle Cypher-Statements erfolgreich ausgeführt!")
 
 # Importiere die Funktion zum Generieren der Queries
-from src.knowledge_graph_creation.Taiwan_apiAnfrageGPT import generate_cypher_queries
+from src.knowledge_graph_creation.createTriplets import generate_cypher_queries
 
 if __name__ == "__main__":
     # Pfad zum Datenordner (ggf. anpassen)

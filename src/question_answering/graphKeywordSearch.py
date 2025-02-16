@@ -1,10 +1,13 @@
+#src/question_answering/graphKeywordSearch.py
+
+
 import os
 from dotenv import load_dotenv, find_dotenv
 from neo4j import GraphDatabase
 
 # Importiere die benötigten Funktionen aus den anderen Modulen
-from questionToKeyword import generate_keywords
-from finalAnswer import generate_answer
+from src.question_answering.createKeywords import generate_keywords
+from src.question_answering.crateFinalAnswer import generate_answer
 
 _ = load_dotenv(find_dotenv())
 

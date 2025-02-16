@@ -18,14 +18,14 @@ def generate_answer(question, relations):
     )
     
     prompt = f"""
-Answer the following question:
+    Answer the following question:
 
-Question: {question}
+    Question: {question}
 
-Relations from the Knowledge Graph:
-{filtered_relations}
+    Relations from the Knowledge Graph:
+    {filtered_relations}
 
-Provide a clear and concise answer.
+    Provide a clear and concise answer.
     """
     
     # Ausgabe des generierten Prompts in der Konsole
